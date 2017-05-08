@@ -2,7 +2,7 @@ FROM debian:stretch-slim
 
 RUN set -ex \
  && apt-get update \
- && apt-get install -y build-essential git \
+ && apt-get install -y build-essential git libssl-dev \
  && git clone https://github.com/peervpn/peervpn.git /tmp/peervpn \
  && cd /tmp/peervpn \
  && make \
