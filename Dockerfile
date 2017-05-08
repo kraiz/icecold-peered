@@ -5,5 +5,8 @@ RUN set -ex \
  && apt-get install -y build-essential git \
  && git clone https://github.com/peervpn/peervpn.git /tmp/peervpn \
  && cd /tmp/peervpn \
- && ls -lisah
+ && make \
+ && ls -lisah \
+ && mv peervpn /usr/bin \
+ && peervpn --help
  
