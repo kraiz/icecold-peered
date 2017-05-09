@@ -33,6 +33,7 @@ RUN set -ex \
  && ldd $(which eiskaltdcpp-daemon) \
 # cleanup
  && apt-get remove -y --purge $BUILD_PACKAGES $(apt-mark showauto) \
+ && apt-get install -y --no-install-recommends $RUNTIME_PACKAGES \
  && rm -rf /tmp/* /var/lib/apt/lists/* \
 # check dynamic links again
  && ldd $(which peervpn) \
