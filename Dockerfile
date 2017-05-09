@@ -1,6 +1,6 @@
 FROM debian:jessie-slim
 
-ENV BUILD_PACKAGES="build-essential cmake curl libssl-dev pkg-config" \
+ENV BUILD_PACKAGES="build-essential cmake curl libbz2-dev libssl-dev pkg-config" \
     RUNTIME_PACKAGES="ca-certificates"
 
 RUN set -ex \
