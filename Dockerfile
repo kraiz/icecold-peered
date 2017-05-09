@@ -33,4 +33,7 @@ RUN set -ex \
  && ldd $(which eiskaltdcpp-daemon) \
 # cleanup
  && apt-get remove -y --purge $BUILD_PACKAGES $(apt-mark showauto) \
- && rm -rf /tmp/* /var/lib/apt/lists/*
+ && rm -rf /tmp/* /var/lib/apt/lists/* \
+# check dynamic links again
+ && ldd $(which peervpn) \
+ && ldd $(which eiskaltdcpp-daemon)
