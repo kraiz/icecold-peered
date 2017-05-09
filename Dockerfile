@@ -5,13 +5,13 @@ ENV BUILD_PACKAGES="build-essential cmake curl libssl-dev pkg-config" \
 
 RUN set -ex \
  && apt-get update \
- && apt-get install -y --no-install-recommends $BUILD_PACKAGES $RUNTIME_PACKAGES
+ && apt-get install -y --no-install-recommends $BUILD_PACKAGES $RUNTIME_PACKAGES \
 # peervpn
  && curl -L https://github.com/peervpn/peervpn/archive/master.tar.gz | tar xz -C /tmp \
  && cd /tmp/peervpn-master \
  && make \
  && make install \
- && ldd $(which peervpn)
+ && ldd $(which peervpn) \
 # eiskaltdcpp
  && curl -L https://github.com/eiskaltdcpp/eiskaltdcpp/archive/master.tar.gz | tar xz -C /tmp \
  && cd /tmp/eiskaltdcpp-master \
