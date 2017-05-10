@@ -1,7 +1,7 @@
 FROM debian:jessie-slim
 
 ENV BUILD_PACKAGES="build-essential cmake curl gettext libbz2-dev libssl-dev libboost-system-dev pkg-config" \
-    RUNTIME_PACKAGES="ca-certificates"
+    RUNTIME_PACKAGES="ca-certificates libboost-system"
 
 RUN set -ex \
  && apt-get update \
