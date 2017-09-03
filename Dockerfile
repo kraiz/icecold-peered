@@ -36,16 +36,20 @@ RUN cd /tmp/eiskaltdcpp-master/builddir \
 
 # icecult
 RUN curl -L https://github.com/kraiz/icecult/archive/master.tar.gz | tar xz -C /tmp
- 
+
+
+# -----------------------------------------------------------------------------
 # production image:
+# -----------------------------------------------------------------------------
 FROM debian:jessie-slim
 COPY --from=builder /tmp/peervpn-master/peervpn /tmp/eiskaltdcpp-master/builddir/eiskaltdcpp-daemon/eiskaltdcpp-daemon /bin/
 COPY --from=builder /tmp/icecult-master /opt/icecult
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
+    iproute2 \
     libboost-system1.55.0 \
-    python-twisted \
+    python-twisted-web \
     uhub \
     supervisor
 RUN ldd $(which peervpn)
