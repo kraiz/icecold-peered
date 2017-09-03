@@ -6,5 +6,5 @@ services:
   - docker
 
 install:
-  - docker build -t kraiz/icecold-peered .
+  - docker build -t kraiz/icecold .
   

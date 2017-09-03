@@ -1,22 +1,25 @@
-FROM debian:jessie-slim
+FROM debian:jessie-slim AS builder
 
-ENV BUILD_PACKAGES="build-essential cmake curl gettext libbz2-dev libssl-dev libboost-system-dev pkg-config" \
-    RUNTIME_PACKAGES="ca-certificates libboost-system1.55.0"
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    ca-certificates \
+    cmake \
+    curl \
+    gettext \
+    libboost-system-dev \
+    libbz2-dev \
+    libssl-dev \
+    pkg-config
 
-RUN set -ex \
- && apt-get update \
- && apt-get install -y --no-install-recommends $BUILD_PACKAGES $RUNTIME_PACKAGES \
 # peervpn
- && curl -L https://github.com/peervpn/peervpn/archive/master.tar.gz | tar xz -C /tmp \
- && cd /tmp/peervpn-master \
- && make \
- && make install \
- && ldd $(which peervpn) \
+RUN curl -L https://github.com/peervpn/peervpn/archive/master.tar.gz | tar xz -C /tmp
+RUN cd /tmp/peervpn-master \
+ && make
+
 # eiskaltdcpp
- && curl -L https://github.com/eiskaltdcpp/eiskaltdcpp/archive/master.tar.gz | tar xz -C /tmp \
- && cd /tmp/eiskaltdcpp-master \
- && mkdir -p builddir \
- && cd builddir \
+RUN curl -L https://github.com/eiskaltdcpp/eiskaltdcpp/archive/master.tar.gz | tar xz -C /tmp
+RUN mkdir -p /tmp/eiskaltdcpp-master/builddir
+RUN cd /tmp/eiskaltdcpp-master/builddir \
  && cmake -DCMAKE_BUILD_TYPE=Release \
           -DNO_UI_DAEMON=ON \
           -DJSONRPC_DAEMON=ON \
@@ -27,14 +30,20 @@ RUN set -ex \
           -DFREE_SPACE_BAR_C=OFF \
           -DLINK=STATIC \
           -Dlinguas="" \
-          .. \
- && make \
- && make install \
- && ldd $(which eiskaltdcpp-daemon) \
-# cleanup
- && apt-get remove -y --purge $BUILD_PACKAGES $(apt-mark showauto) \
- && apt-get install -y --no-install-recommends $RUNTIME_PACKAGES \
- && rm -rf /tmp/* /var/lib/apt/lists/* \
-# check dynamic links again
- && ldd $(which peervpn) \
- && ldd $(which eiskaltdcpp-daemon)
+          ..
+RUN cd /tmp/eiskaltdcpp-master/builddir \
+ && make
+ 
+# production image:
+FROM debian:jessie-slim
+COPY --from=builder /tmp/peervpn-master/peervpn /tmp/eiskaltdcpp-master/builddir/eiskaltdcpp-daemon/eiskaltdcpp-daemon /bin/
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    libboost-system1.55.0 \
+    supervisor
+RUN ldd $(which peervpn)
+RUN ldd $(which eiskaltdcpp-daemon)
+
+ADD ./supervisor.conf /etc/supervisor/conf.d/supervisor.conf
+CMD ["/usr/bin/supervisord", "-nc", "/etc/supervisor/supervisord.conf"]
