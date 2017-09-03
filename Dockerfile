@@ -33,17 +33,26 @@ RUN cd /tmp/eiskaltdcpp-master/builddir \
           ..
 RUN cd /tmp/eiskaltdcpp-master/builddir \
  && make
+
+# icecult
+RUN curl -L https://github.com/kraiz/icecult/archive/master.tar.gz | tar xz -C /tmp
  
 # production image:
 FROM debian:jessie-slim
 COPY --from=builder /tmp/peervpn-master/peervpn /tmp/eiskaltdcpp-master/builddir/eiskaltdcpp-daemon/eiskaltdcpp-daemon /bin/
+COPY --from=builder /tmp/icecult-master /opt/icecult
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     libboost-system1.55.0 \
+    python-twisted \
+    uhub \
     supervisor
 RUN ldd $(which peervpn)
 RUN ldd $(which eiskaltdcpp-daemon)
+RUN ls /opt/icecult
+
+EXPOSE 80 4000/udp
 
 ADD ./supervisor.conf /etc/supervisor/conf.d/supervisor.conf
 CMD ["/usr/bin/supervisord", "-nc", "/etc/supervisor/supervisord.conf"]
