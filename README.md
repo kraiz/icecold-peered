@@ -8,3 +8,24 @@ docker run --rm --privileged -v configs/peervpn.conf:/etc/peervpn.conf kraiz/ice
 ```
 * we need the `privileged` flag for accessing TAP device for `peervpn`
 * mount `peervpn.conf` config file
+
+# volumes
+
+* `/etc/peervpn.conf`, a configuration file due to (peervpn.net)[https://peervpn.net/]:
+  ```
+  port <PORT>
+  ifconfig4 <IP>/24
+  interface eiskalt0
+  networkname Eiskalt
+
+  psk <PSK>
+
+  enabletunneling yes
+  enablerelay no
+  enableprivdrop yes
+  user nobody
+  group nogroup
+
+  initpeers <host port> <host port>...
+  ```
+* `/opt/eiskalt_data/`, config and temp data folder. 

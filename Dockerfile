@@ -34,29 +34,33 @@ RUN cd /tmp/eiskaltdcpp-master/builddir \
 RUN cd /tmp/eiskaltdcpp-master/builddir \
  && make
 
-# icecult
+# icecult + webserver
 RUN curl -L https://github.com/kraiz/icecult/archive/master.tar.gz | tar xz -C /tmp
+RUN curl -L https://caddyserver.com/download/linux/amd64 | tar xz -C /bin
+# forego - process manager
+RUN curl https://bin.equinox.io/c/ekMN3bCZFUn/forego-stable-linux-amd64.tgz | tar xz -C /bin
 
 
 # -----------------------------------------------------------------------------
 # production image:
 # -----------------------------------------------------------------------------
 FROM debian:jessie-slim
-COPY --from=builder /tmp/peervpn-master/peervpn /tmp/eiskaltdcpp-master/builddir/eiskaltdcpp-daemon/eiskaltdcpp-daemon /bin/
-COPY --from=builder /tmp/icecult-master /opt/icecult
+COPY --from=builder /tmp/peervpn-master/peervpn \
+                    /tmp/eiskaltdcpp-master/builddir/eiskaltdcpp-daemon/eiskaltdcpp-daemon \
+                    /bin/forego \
+                    /bin/caddy \
+                    /bin/
+COPY --from=builder /tmp/icecult-master/app /opt/icecult
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     iproute2 \
     libboost-system1.55.0 \
-    python-twisted-web \
-    uhub \
-    supervisor
-RUN ldd $(which peervpn)
-RUN ldd $(which eiskaltdcpp-daemon)
-RUN ls /opt/icecult
+    uhub
 
-EXPOSE 80 4000/udp
+ADD ./Procfile /    
+ADD ./Caddyfile /
 
-ADD ./supervisor.conf /etc/supervisor/conf.d/supervisor.conf
-CMD ["/usr/bin/supervisord", "-nc", "/etc/supervisor/supervisord.conf"]
+EXPOSE 80/tcp 7000/udp
+
+CMD ["/bin/forego", "start"]
