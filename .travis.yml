@@ -12,4 +12,3 @@ services:
 
 install:
   - docker build -t kraiz/icecold .
-  

@@ -4,10 +4,11 @@ docker image combining peervpn with eiskaltdcpp client and icecult webinterface 
 # command
 
 ```
-docker run --rm --privileged -v configs/peervpn.conf:/etc/peervpn.conf kraiz/icecold
+docker run --rm --privileged -v configs/peervpn.conf:/etc/peervpn.conf -v configs/eiskalt_data:/opt/eiskalt_data kraiz/icecold
 ```
 * we need the `privileged` flag for accessing TAP device for `peervpn`
 * mount `peervpn.conf` config file
+* mount `eiskalt_data` folder which holds temp data and generated configs
 
 # volumes
 

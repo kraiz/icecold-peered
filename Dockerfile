@@ -58,7 +58,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libboost-system1.55.0 \
     uhub
 
-ADD ./Procfile /    
+ADD ./Procfile /
 ADD ./Caddyfile /
 
 EXPOSE 80/tcp 7000/udp
