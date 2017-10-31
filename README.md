@@ -7,6 +7,9 @@ docker image combining peervpn with eiskaltdcpp client and icecult webinterface 
 docker run --rm --privileged \
  -v /path/to/peervpn.conf:/etc/peervpn.conf \
  -v /path/to/eiskalt:/opt/eiskalt \
+ -v /path/to/downloads:/opt/downloads \
+ -v /path/to/share1:/opt/share/share1 \
+ -v /path/to/stuff:/opt/share/stuff \
  -p 7000:7000/udp
  -p 8008:80
    kraiz/icecold
@@ -67,4 +70,5 @@ docker run --rm --privileged \
     <FavoriteDirs/>
   </Favorites>
   ```
-* `/opt/share/`, mount anything you want to share below this folder. Should match direcotries of `DCPlusPlus.xml`.
+* `/opt/share/`, mount anything you want to share below this folder. Should match directories of `DCPlusPlus.xml`.
+* `/opt/downloads/`, a place where to store the files you downloaded. Should match directories of `DCPlusPlus.xml`.
