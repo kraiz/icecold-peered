@@ -53,8 +53,7 @@ docker run --rm
      <MaxUploadSpeedMain type="int">0</MaxUploadSpeedMain>
     </Settings>
     <Share>
-      <Directory Virtual="share1">/opt/share/share1/</Directory>
-      <Directory Virtual="stuff">/opt/share/stuff/</Directory>
+      <Directory Virtual="share">/opt/share/</Directory>
     </Share>
   </DCPlusPlus>
 
@@ -64,12 +63,12 @@ docker run --rm
   <?xml version="1.0" encoding="utf-8" standalone="yes"?>
   <Favorites>
     <Hubs>
-      <Hub Name="muhub" Connect="1" Nick="<NICK>" Password="" Server="adc://<HUBIP>:<HUBPORT>" />
+      <Hub Name="muhub" Connect="1" Nick="<MYNICK>" Password="" Server="adc://<HUBIP>:<HUBPORT>" />
     </Hubs>
     <Users/>
     <UserCommands/>
     <FavoriteDirs/>
   </Favorites>
   ```
-* `/opt/share/`, mount anything you want to share below this folder. Should match directories of `DCPlusPlus.xml`.
+* `/opt/share/`, mount anything you want to share below this folder.
 * `/opt/downloads/`, a place where to store the files you downloaded. Should match directories of `DCPlusPlus.xml`.
