@@ -24,7 +24,7 @@ docker run --rm
 * `80` is the webinterface for you to open in browser
 
 # volumes
-* `/etc/peervpn.conf`, a configuration file due to (peervpn.net)[https://peervpn.net/]:
+* `/etc/peervpn.conf`, a configuration file due to [peervpn.net](https://peervpn.net/):
   ```
   port <PORT>
   ifconfig4 <IP>/24
