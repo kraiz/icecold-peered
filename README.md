@@ -4,18 +4,19 @@ docker image combining peervpn with eiskaltdcpp client and icecult webinterface 
 # command
 
 ```
-docker run --rm --privileged \
- -v /path/to/peervpn.conf:/etc/peervpn.conf \
- -v /path/to/eiskalt:/opt/eiskalt \
- -v /path/to/downloads:/opt/downloads \
- -v /path/to/share1:/opt/share/share1 \
- -v /path/to/stuff:/opt/share/stuff \
+docker run --rm
+  --device="/dev/net/tun" --add_cap="NET_ADMIN"
+ -v /path/to/peervpn.conf:/etc/peervpn.conf
+ -v /path/to/eiskalt:/opt/eiskalt
+ -v /path/to/downloads:/opt/downloads
+ -v /path/to/share1:/opt/share/share1
+ -v /path/to/stuff:/opt/share/stuff
  -p 7000:7000/udp
  -p 8008:80
    kraiz/icecold
 ```
 * for `peervpn` we need access to TAP device, so we have 2 options:
-  * add `--device="/dev/net/run" --add_cap="NET_ADMIN"` (recommended but not possible everywhere (synology nas))
+  * add `--device="/dev/net/tun" --add_cap="NET_ADMIN"` (recommended but not possible everywhere (f.e. synology nas))
   * add `--privileged` which is kind of root access in includes the cap above
 
 # ports
