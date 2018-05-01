@@ -55,10 +55,9 @@ COPY --from=builder /tmp/icecult-master/app /opt/icecult
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     iproute2 \
-    libboost-system1.55.0 \
-    uhub
+    libboost-system1.55.0
 
-ADD ./Procfile /    
+ADD ./Procfile /
 ADD ./Caddyfile /
 
 EXPOSE 80/tcp 7000/udp
