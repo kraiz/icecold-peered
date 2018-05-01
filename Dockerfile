@@ -36,7 +36,7 @@ RUN cd /tmp/eiskaltdcpp-master/builddir \
 
 # icecult + webserver
 RUN curl -L https://github.com/kraiz/icecult/archive/master.tar.gz | tar xz -C /tmp
-RUN curl -L https://caddyserver.com/download/linux/amd64 | tar xz -C /bin
+RUN curl -L https://caddyserver.com/download/linux/amd64?license=personal | tar xz -C /bin
 # forego - process manager
 RUN curl https://bin.equinox.io/c/ekMN3bCZFUn/forego-stable-linux-amd64.tgz | tar xz -C /bin
 
