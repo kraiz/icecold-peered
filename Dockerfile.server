@@ -12,4 +12,4 @@ hub: /usr/bin/uhub -v\n\
 bot: /usr/bin/twistd -n --pidfile= nusbot'\
 >> /Procfile
 
-CMD ["/bin/forego", "start"]
+CMD ["/bin/forego", "start", "-r"]
