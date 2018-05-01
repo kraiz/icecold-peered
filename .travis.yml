@@ -11,4 +11,5 @@ services:
   - docker
 
 install:
-  - docker build -t kraiz/icecold .
+  - docker build -t kraiz/icecold:latest .
+  - docker build -t kraiz/icecold:server -f Dockerfile.server .
