@@ -1,5 +1,10 @@
 sudo: required
 
+addons:
+  apt:
+    packages:
+      - docker-ce
+
 language: c
 
 services:
@@ -7,4 +12,3 @@ services:
 
 install:
   - docker build -t kraiz/icecold .
-  
