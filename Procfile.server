@@ -1,3 +1,0 @@
-vpn: /bin/peervpn /etc/peervpn.conf
-hub: sleep 5000
-bot: sleep 5000
