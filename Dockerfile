@@ -21,6 +21,9 @@ RUN curl -L https://github.com/eiskaltdcpp/eiskaltdcpp/archive/master.tar.gz | t
 RUN mkdir -p /tmp/eiskaltdcpp-master/builddir
 RUN cd /tmp/eiskaltdcpp-master/builddir \
  && cmake -DCMAKE_BUILD_TYPE=Release \
+          -DLUA_SCRIPT=OFF \
+          -DUSE_MINIUPNP=OFF \
+          -DPERL_REGEX=OFF \
           -DNO_UI_DAEMON=ON \
           -DJSONRPC_DAEMON=ON \
           -DLOCAL_JSONCPP=ON \
